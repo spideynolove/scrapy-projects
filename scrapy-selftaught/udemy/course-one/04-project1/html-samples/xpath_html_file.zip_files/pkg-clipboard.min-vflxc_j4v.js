@@ -1,0 +1,2 @@
+define("metaserver/static/js/modules/clean/clipboard_v3",["require","exports"],(function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.copyToClipboard=void 0,t.copyToClipboard=function(e,t,o){const c=document.createElement("input");c.type="text",c.value=e,document.body.appendChild(c),c.select();let d=!1;try{d=document.execCommand("copy")}catch(e){}document.body.removeChild(c),d?null==t||t():null==o||o()}}));
+//# sourceMappingURL=pkg-clipboard.min.js-vfldUBMkC.map

@@ -1,0 +1,12 @@
+
+# selenium driver all attributes
+
+```python
+['CONTEXT_CHROME', 'CONTEXT_CONTENT', '__abstractmethods__', '__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__enter__', '__eq__', '__exit__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_abc_impl', '_authenticator_id', '_file_detector', '_get_cdp_details', '_is_remote', '_mobile', '_shadowroot_cls', '_switch_to', '_unwrap_value', '_web_element_cls', '_wrap_value', 'add_cookie', 'add_credential', 'add_virtual_authenticator', 'application_cache', 'back', 'bidi_connection', 'binary', 'capabilities', 'caps', 'close', 'command_executor', 'context', 'create_web_element', 'current_url', 'current_window_handle', 'delete_all_cookies', 'delete_cookie', 'desired_capabilities', 'error_handler', 'execute', 'execute_async_script', 'execute_script', 'file_detector', 'file_detector_context', 'find_element', 'find_elements', 'firefox_profile', 'forward', 'fullscreen_window', 'get', 'get_cookie', 'get_cookies', 'get_credentials', 'get_full_page_screenshot_as_base64', 'get_full_page_screenshot_as_file', 'get_full_page_screenshot_as_png', 'get_log', 'get_pinned_scripts', 'get_screenshot_as_base64', 'get_screenshot_as_file', 'get_screenshot_as_png', 'get_window_position', 'get_window_rect', 'get_window_size', 'implicitly_wait', 'install_addon', 'log_types', 'maximize_window', 'minimize_window', 'mobile', 'name', 'orientation', 'page_source', 'pin_script', 'pinned_scripts', 'print_page', 'profile', 'quit', 'refresh', 'remove_all_credentials', 'remove_credential', 'remove_virtual_authenticator', 'save_full_page_screenshot', 'save_screenshot', 'service', 'session_id', 'set_context', 'set_page_load_timeout', 'set_script_timeout', 'set_user_verified', 'set_window_position', 'set_window_rect', 'set_window_size', 'start_client', 'start_session', 'stop_client', 'switch_to', 'timeouts', 'title', 'uninstall_addon', 'unpin', 'virtual_authenticator_id', 'window_handles']
+```
+
+# middleware
+
+- [scrapy-selenium](https://github.com/clemfromspace/scrapy-selenium)
+- [reference link](https://slickdeals.net/computer-deals/)
+  

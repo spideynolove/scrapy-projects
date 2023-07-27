@@ -1,0 +1,10 @@
+*.pyc
+*.json
+*.html
+*.csv
+*.log
+*.png
+*.db
+.env
+Pipfile
+Pipfile.lock

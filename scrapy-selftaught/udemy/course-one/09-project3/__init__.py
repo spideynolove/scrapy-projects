@@ -1,0 +1,1 @@
+__doc__ = '''http://books.toscrape.com/'''
