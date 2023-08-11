@@ -1,12 +1,18 @@
-# Define here the models for your scraped items
-#
-# See documentation in:
-# https://docs.scrapy.org/en/latest/topics/items.html
-
-import scrapy
+from scrapy import Item, Field
 
 
-class CrawldataItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+class FixtureItem(Item):
+    week = Field()
+    season = Field()
+    host = Field()
+    guest = Field()
+    stadium = Field()
+    attendance = Field()
+
+class ClubItem(Item):
+    team = Field()
+    ground = Field()
+    # overall = Field()
+    # home = Field()
+    # away = Field()
+    # form = Field()

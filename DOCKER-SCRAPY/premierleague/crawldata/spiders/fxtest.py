@@ -4,24 +4,19 @@ from crawldata.items import FixtureItem
 
 
 class CrawlerSpider(Spider):
-    name = "fixtures"
+    name = "fxtest"
     check_dirs(f"{PROJECT_PATH}/log/logfile/")
     custom_settings = {
         'LOG_FILE': f"{PROJECT_PATH}/log/logfile/{MIC_PATH.name}_{name}_{LOG_TIME}.log",
         'DOWNLOAD_DELAY': 1,
     }
-    base = 'https://footballapi.pulselive.com/football/fixtures?{}'
-
-    def __init__(self, *args, **kwargs): 
-        super(CrawlerSpider, self).__init__(*args, **kwargs) 
-        fixparams['teams'] = kwargs.get('teams')
 
     def start_requests(self):
         open(f'{MIC_PATH}/{self.name}.json', 'w').close()
-        yield Request(self.base.format(urlencode(fixparams)), meta={'page': fixparams.get('page')})
+        url = 'https://footballapi.pulselive.com/football/fixtures?comps=1&pageSize=20&sort=desc&statuses=C&altIds=true&compSeasons=489&page=0&teams=10'
+        yield Request(url)
 
     def parse(self, response):
-        page = int(response.meta['page'])
         data = loads(response.text)
         for item in data.get('content'):
             yield FixtureItem({
@@ -39,9 +34,5 @@ class CrawlerSpider(Spider):
                     'name': item.get('ground').get('name'),
                     'city': item.get('ground').get('city'),
                 },
-                # 'attendance': int(item.get('attendance')),
                 'attendance': int(item.get('attendance')) if item.get('attendance') else '',
             })
-        if data.get('content'):
-            fixparams['page'] = str(page+1)
-            yield Request(self.base.format(urlencode(fixparams)), meta={'page': page})
