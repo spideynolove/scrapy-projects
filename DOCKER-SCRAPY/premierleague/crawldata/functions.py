@@ -5,6 +5,7 @@ MIC_PATH = Path(__file__).resolve().parent.parent
 PROJECT_PATH = MIC_PATH.parent
 path.append(str(PROJECT_PATH.absolute()))
 from helpers import *
+check_dirs(f"{PROJECT_PATH}/log/logfile/")
 
 fixparams = {
     'comps': '1',

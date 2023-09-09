@@ -7,7 +7,6 @@ class CrawlerSpider(RedisSpider):
     redis_key = f'{name}:start_urls'
     redis_batch_size = 1
     max_idle_time = 7
-    check_dirs(f"{PROJECT_PATH}/log/logfile/")
     custom_settings = {
         'LOG_FILE': f"{PROJECT_PATH}/log/logfile/{MIC_PATH.name}_{name}_{LOG_TIME}.log",
         'DOWNLOAD_DELAY': 1,

@@ -8,9 +8,9 @@ from urllib.parse import urlencode
 
 class CrawlerSpider(Spider):
     name = "Market"
-    check_dirs(f"{PROJECT_PATH}/log/logfile/")
+    check_dirs(f"{PROJECT_PATH}/_log/logfile/")
     custom_settings = {
-        'LOG_FILE': f"{PROJECT_PATH}/log/logfile/{SITE_PATH.name}_{name}_{LOG_TIME}.log",
+        'LOG_FILE': f"{PROJECT_PATH}/_log/logfile/{SITE_PATH.name}_{name}_{LOG_TIME}.log",
     }
 
     headers['Content-Type'] = 'multipart/form-data; boundary=---------------------------48222048032047603611657549096'

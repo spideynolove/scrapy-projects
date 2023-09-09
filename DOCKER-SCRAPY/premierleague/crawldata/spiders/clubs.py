@@ -5,7 +5,6 @@ from crawldata.items import ClubItem
 
 class CrawlerSpider(Spider):
     name = "seasons"
-    check_dirs(f"{PROJECT_PATH}/log/logfile/")
     custom_settings = {
         'LOG_FILE': f"{PROJECT_PATH}/log/logfile/{MIC_PATH.name}_{name}_{LOG_TIME}.log",
         'DOWNLOAD_DELAY': 1,

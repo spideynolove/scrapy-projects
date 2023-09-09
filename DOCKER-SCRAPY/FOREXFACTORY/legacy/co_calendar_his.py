@@ -9,9 +9,9 @@ from urllib.parse import urlencode
 
 class CrawlerSpider(Spider):
     name = "CalendarHist"
-    check_dirs(f"{PROJECT_PATH}/log/logfile/")
+    check_dirs(f"{PROJECT_PATH}/_log/logfile/")
     custom_settings = {
-        'LOG_FILE': f"{PROJECT_PATH}/log/logfile/{SITE_PATH.name}_{name}_{LOG_TIME}.log",
+        'LOG_FILE': f"{PROJECT_PATH}/_log/logfile/{SITE_PATH.name}_{name}_{LOG_TIME}.log",
         # 'DOWNLOAD_DELAY': 3,
     }
 

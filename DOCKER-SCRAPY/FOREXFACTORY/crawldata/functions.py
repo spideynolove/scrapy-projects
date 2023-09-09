@@ -1,120 +1,40 @@
-from requests import Session
 from pathlib import Path
-from datetime import datetime
 from sys import path
 
 SITE_PATH = Path(__file__).resolve().parent.parent
 PROJECT_PATH = SITE_PATH.parent
-NOW = datetime.now()
-
-CRAWL_DATE = NOW.strftime('%Y-%m-%d %H:%M')
-# CRAWL_TIME = NOW.strftime('%H:%M')
-LOG_TIME = NOW.strftime('%d%m%Y')
-USE_LOCAL_MONGO = True
-# TIME_ = CRAWL_DATE + " " + CRAWL_TIME
-
-# accept intervals: H4
-CHG_PERIODS = {
-    '48hr': ('2,D1', '12,H4', '48,H1'),
-    '24hr': ('6,H4', '24,H1'),
-    '12hr': ('3,H4', '12,H1'),
-    '6hr': ('6,H1',),
-    # '5hr': ('5,H1',),
-    # '4hr': ('4,H1'),
-    # '3hr': ('3,H1',),
-    # '2hr': ('2,H1',),
-    # '1hr': ('1,H1',),
-}
-INTERVALS = (
-    # 'M5', 
-    'H1', 'H4', 
-    'D1', 'MN1'
-)
-
-QUOTECHECK = ('JPY',)
-
-TEST_SYMBOLS = (
-    # 'GBPAUD', 'GBPNZD', 'GBPCAD', 'GBPCHF', 'GBPJPY',
-    'USDJPY',
-    # 'USDCAD',
-)
-
-BB_PERIODS = ('M5', 'H1', 'D1')
-SYMBOLS = (
-    'EURUSD',
-    'AUDUSD', 'NZDUSD', 'USDJPY', 'USDCHF', 'USDCAD', 'GBPUSD',
-    'EURAUD', 'EURNZD', 'EURCAD', 'EURCHF', 'EURJPY', 'EURGBP',
-    'GBPAUD', 'GBPNZD', 'GBPCAD', 'GBPCHF', 'GBPJPY',
-
-    # 'XAUUSD',
-    # 'XAGUSD',
-    # 'AUDNZD', 'AUDCAD', 'AUDCHF', 'AUDJPY',
-    # 'NZDCAD', 'NZDCHF', 'NZDJPY',
-    # 'CADCHF', 'CADJPY',
-    # 'CHFJPY',
-)
-
-MACROSYMBOLS = (
-    'SPXUSD', 'Nikkei225USD','FTSE100USD', 'DXYUSD', 'WTIUSD', 
-    'GoldUSD', 'BTCUSD', 'VIXUSD'
-)
-
 path.append(str(PROJECT_PATH.absolute()))
 from helpers import *
 headers = {
     'User-Agent': random_user_agent(),
 }
 
-IGNORES = (
-    'ads',
-    # 'everesttech',
-    # 'smartadserver',
-    # 'google',
-    # 'cloudfront',
-)
+NEWS = {
+    'lastest': '-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="securitytoken"\r\n\r\nguest\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="do"\r\n\r\nsaveoptions\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="setdefault"\r\n\r\nno\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="ignoreinput"\r\n\r\nno\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsLeft1][idSuffix]"\r\n\r\n{}\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsLeft1][_flexForm_]"\r\n\r\nflexForm\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsLeft1][modelData]"\r\n\r\neyJwYV9sYXlvdXRfaWQiOiJuZXdzIiwicGFfY29tcG9uZW50X2lkIjoiTmV3c0xlZnRPbmUiLCJwYV9jb250cm9scyI6Im5ld3N8TmV3c0xlZnRPbmUiLCJwYV9pbmplY3RyZXZlcnNlIjpmYWxzZSwicGFfaGFyZGluamVjdGlvbiI6ZmFsc2UsInBhX2luamVjdGF0IjpmYWxzZX0=\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsLeft1][stream][]"\r\n\r\n1\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsLeft1][news]"\r\n\r\nall\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsLeft1][format]"\r\n\r\nheadline\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsLeft1][items]"\r\n\r\n15\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsLeft1][sort]"\r\n\r\nlatest\r\n-----------------------------48222048032047603611657549096--\r\n',
+    'hottest': '-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="securitytoken"\r\n\r\nguest\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="do"\r\n\r\nsaveoptions\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="setdefault"\r\n\r\nno\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="ignoreinput"\r\n\r\nno\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsRight1][idSuffix]"\r\n\r\n{}\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsRight1][_flexForm_]"\r\n\r\nflexForm\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsRight1][modelData]"\r\n\r\neyJwYV9sYXlvdXRfaWQiOiJuZXdzIiwicGFfY29tcG9uZW50X2lkIjoiTmV3c1JpZ2h0T25lIiwicGFfY29udHJvbHMiOiJuZXdzfE5ld3NSaWdodE9uZSIsInBhX2luamVjdHJldmVyc2UiOmZhbHNlLCJwYV9oYXJkaW5qZWN0aW9uIjpmYWxzZSwicGFfaW5qZWN0YXQiOmZhbHNlfQ==\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsRight1][news]"\r\n\r\nall\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsRight1][format]"\r\n\r\nlarge\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsRight1][items]"\r\n\r\n3\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsRight1][sort]"\r\n\r\nhottest\r\n-----------------------------48222048032047603611657549096--\r\n',
+    'most12h': '-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="securitytoken"\r\n\r\nguest\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="do"\r\n\r\nsaveoptions\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="setdefault"\r\n\r\nno\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="ignoreinput"\r\n\r\nno\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsRight3][idSuffix]"\r\n\r\n{}\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsRight3][_flexForm_]"\r\n\r\nflexForm\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsRight3][modelData]"\r\n\r\neyJwYV9sYXlvdXRfaWQiOiJuZXdzIiwicGFfY29tcG9uZW50X2lkIjoiTmV3c1JpZ2h0VGhyZWUiLCJwYV9jb250cm9scyI6Im5ld3N8TmV3c1JpZ2h0VGhyZWUiLCJwYV9pbmplY3RyZXZlcnNlIjpmYWxzZSwicGFfaGFyZGluamVjdGlvbiI6ZmFsc2UsInBhX2luamVjdGF0IjpmYWxzZX0=\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsRight3][news]"\r\n\r\n8\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsRight3][format]"\r\n\r\nthreads\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsRight3][items]"\r\n\r\n3\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsRight3][sort]"\r\n\r\nmostviewed\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsRight3][period]"\r\n\r\nlast12h\r\n-----------------------------48222048032047603611657549096--\r\n',
+    'lastFA': '-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="securitytoken"\r\n\r\nguest\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="do"\r\n\r\nsaveoptions\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="setdefault"\r\n\r\nno\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="ignoreinput"\r\n\r\nno\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsRight2][idSuffix]"\r\n\r\n{}\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsRight2][_flexForm_]"\r\n\r\nflexForm\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsRight2][modelData]"\r\n\r\neyJwYV9sYXlvdXRfaWQiOiJuZXdzIiwicGFfY29tcG9uZW50X2lkIjoiTmV3c1JpZ2h0VHdvIiwicGFfY29udHJvbHMiOiJuZXdzfE5ld3NSaWdodFR3byIsInBhX2luamVjdHJldmVyc2UiOmZhbHNlLCJwYV9oYXJkaW5qZWN0aW9uIjpmYWxzZSwicGFfaW5qZWN0YXQiOmZhbHNlfQ==\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsRight2][news]"\r\n\r\n107\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsRight2][format]"\r\n\r\nthreads\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsRight2][items]"\r\n\r\n3\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsRight2][sort]"\r\n\r\nmostviewed\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsRight2][period]"\r\n\r\nlast12h\r\n-----------------------------48222048032047603611657549096--\r\n',
+    'lastTA': '-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="securitytoken"\r\n\r\nguest\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="do"\r\n\r\nsaveoptions\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="setdefault"\r\n\r\nno\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="ignoreinput"\r\n\r\nno\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsRight4][idSuffix]"\r\n\r\n{}\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsRight4][_flexForm_]"\r\n\r\nflexForm\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsRight4][modelData]"\r\n\r\neyJwYV9sYXlvdXRfaWQiOiJuZXdzIiwicGFfY29tcG9uZW50X2lkIjoiTmV3c1JpZ2h0Rm91ciIsInBhX2NvbnRyb2xzIjoibmV3c3xOZXdzUmlnaHRGb3VyIiwicGFfaW5qZWN0cmV2ZXJzZSI6ZmFsc2UsInBhX2hhcmRpbmplY3Rpb24iOmZhbHNlLCJwYV9pbmplY3RhdCI6ZmFsc2V9\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsRight4][news]"\r\n\r\n89\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsRight4][format]"\r\n\r\nlarge\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsRight4][items]"\r\n\r\n2\r\n-----------------------------48222048032047603611657549096\r\nContent-Disposition: form-data; name="flex[News_newsRight4][sort]"\r\n\r\nlatest\r\n-----------------------------48222048032047603611657549096--\r\n',
+}
 
-def should_abort_request(req):
-    if any(item in req.url for item in IGNORES):
-        return True
-
-    if req.resource_type == "image":
-        return True
-
-    if req.resource_type == "media":
-        return True
-
-    # if req.resource_type == "script":
-    #     return True
-
-    # if req.resource_type == "xhr":    # need
-    #     return True
-
-    # if req.resource_type == "stylesheet": # slow
-    #     return True
-
-    # if req.resource_type == "other":
-    #     return True
-
-    # if req.method.lower() == 'post':
-    #     # logging.log(logging.INFO, f"Ignoring {req.method} {req.url} ")
-    #     return True
-
-    return False
-
+calendata = '-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="securitytoken"\r\n\r\nguest\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="do"\r\n\r\nsaveoptions\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="setdefault"\r\n\r\nno\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="ignoreinput"\r\n\r\nno\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="flex[Calendar_mainCalCopy1][idSuffix]"\r\n\r\n\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="flex[Calendar_mainCalCopy1][_flexForm_]"\r\n\r\nflexForm\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="flex[Calendar_mainCalCopy1][modelData]"\r\n\r\neyJwYV9sYXlvdXRfaWQiOiJob21lcGFnZSIsInBhX2NvbXBvbmVudF9pZCI6IkNhbGVuZGFyX0NvcHkxIiwicGFfY29udHJvbHMiOiJob21lcGFnZXxDYWxlbmRhcl9Db3B5MSIsInBhX2luamVjdHJldmVyc2UiOmZhbHNlLCJwYV9oYXJkaW5qZWN0aW9uIjpmYWxzZSwicGFfaW5qZWN0YXQiOmZhbHNlLCJob21lQ2FsZW5kYXIiOnRydWUsInZpZXdpbmdUb2RheSI6ZmFsc2UsInRvZGF5RGF0ZSI6Ik1heTI0LjIwMjMiLCJ0b21vcnJvd0RhdGUiOiJNYXkyNS4yMDIzIiwicHJldkNhbExpbmsiOiJyYW5nZT1tYXkxNi4yMDIzLW1heTIzLjIwMjMiLCJuZXh0Q2FsTGluayI6InJhbmdlPWp1bjEuMjAyMy1qdW44LjIwMjMiLCJwcmV2QWx0IjoiTWF5IDE2LCAyMDIzIC0gTWF5IDIyLCAyMDIzIiwibmV4dEFsdCI6Ikp1biAxLCAyMDIzIC0gSnVuIDcsIDIwMjMiLCJuZXh0SGlkZGVuIjpmYWxzZSwicHJldkhpZGRlbiI6ZmFsc2UsInJpZ2h0TGluayI6dHJ1ZX0=\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="flex[Calendar_mainCalCopy1][begindate]"\r\n\r\n{}\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="flex[Calendar_mainCalCopy1][enddate]"\r\n\r\n{}\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="flex[Calendar_mainCalCopy1][calendardefault]"\r\n\r\ntoday\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="flex[Calendar_mainCalCopy1][impacts][high]"\r\n\r\nhigh\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="flex[Calendar_mainCalCopy1][impacts][medium]"\r\n\r\nmedium\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="flex[Calendar_mainCalCopy1][_cbarray_]"\r\n\r\n1\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="flex[Calendar_mainCalCopy1][eventtypes][growth]"\r\n\r\ngrowth\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="flex[Calendar_mainCalCopy1][eventtypes][inflation]"\r\n\r\ninflation\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="flex[Calendar_mainCalCopy1][eventtypes][employment]"\r\n\r\nemployment\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="flex[Calendar_mainCalCopy1][eventtypes][centralbank]"\r\n\r\ncentralbank\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="flex[Calendar_mainCalCopy1][eventtypes][bonds]"\r\n\r\nbonds\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="flex[Calendar_mainCalCopy1][eventtypes][housing]"\r\n\r\nhousing\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="flex[Calendar_mainCalCopy1][eventtypes][sentiment]"\r\n\r\nsentiment\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="flex[Calendar_mainCalCopy1][eventtypes][pmi]"\r\n\r\npmi\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="flex[Calendar_mainCalCopy1][eventtypes][speeches]"\r\n\r\nspeeches\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="flex[Calendar_mainCalCopy1][eventtypes][misc]"\r\n\r\nmisc\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="flex[Calendar_mainCalCopy1][_cbarray_]"\r\n\r\n1\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="flex[Calendar_mainCalCopy1][currencies][aud]"\r\n\r\naud\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="flex[Calendar_mainCalCopy1][currencies][cad]"\r\n\r\ncad\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="flex[Calendar_mainCalCopy1][currencies][chf]"\r\n\r\nchf\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="flex[Calendar_mainCalCopy1][currencies][cny]"\r\n\r\ncny\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="flex[Calendar_mainCalCopy1][currencies][eur]"\r\n\r\neur\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="flex[Calendar_mainCalCopy1][currencies][gbp]"\r\n\r\ngbp\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="flex[Calendar_mainCalCopy1][currencies][jpy]"\r\n\r\njpy\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="flex[Calendar_mainCalCopy1][currencies][nzd]"\r\n\r\nnzd\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="flex[Calendar_mainCalCopy1][currencies][usd]"\r\n\r\nusd\r\n-----------------------------41566770301618672087425875231\r\nContent-Disposition: form-data; name="flex[Calendar_mainCalCopy1][_cbarray_]"\r\n\r\n1\r\n-----------------------------41566770301618672087425875231--\r\n'
+specials = {'nikkei': 'Nikkei225/USD', 'gold': 'Gold/USD'}
 
 def get_unix(time_: datetime = None, multiply: int = 1000):
     return str(datetime.timestamp(time_)*multiply).split('.')[0]
 
-
-def get_number(string: str = None, rnum: int=4) -> str:
-    string = get_num(string)
-    return str(round(float(string), rnum)) if string else ''
+def get_number(nstr: str = None, rnum: int=4) -> str:
+    nstr = get_num(nstr)
+    return str(round(float(nstr), rnum)) if nstr else ''
 
 def gen_perform(symbols: tuple = None, periods: tuple = None):
     symbols = [symbol[:3] + '%2F' + symbol[3:] for symbol in symbols]
     RETS = [list(zip([symbol]*len(period), period)) for symbol in symbols for period in periods.values()]
     return (','.join(item) for item in flatten(RETS))
 
-def revert_perform(string: str = None):
+def revert_perform(string: str = None)-> str:
     string = string.split(',')
     return string[0].replace('%2F', ''), ''.join(string[1:])
+
+def tran_s(sstr: str = None)-> str:
+    return f"{sstr[:3]}/{sstr[3:]}".upper()

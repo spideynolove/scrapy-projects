@@ -26,6 +26,7 @@ def random_user_agent():
     # # VERSION==1.1.3
     # ua_loc = f'{CURRENT_PATH}/fake_useragent{VERSION}.json' 
     # ua = UserAgent(use_external_data=True, cache_path=ua_loc)
+    
     ua = UserAgent(min_percentage=1.3)
     return ua.random
 

@@ -1,45 +1,40 @@
-import pymongo
-from bson.objectid import ObjectId
-import logging
-import json
 from crawldata.functions import *
-from configparser import ConfigParser
-config = ConfigParser()
 
 
-class CrawldataPipeline(object):
+class CrawldataPipeline:
+    collection = 'items'
+
+    def __init__(self, mongodb_uri, mongodb_db):
+        self.mongodb_uri = mongodb_uri
+        self.mongodb_db = mongodb_db
+        if not self.mongodb_uri: exit("You need to provide a Connection String.")
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        return cls(
+            mongodb_uri=crawler.settings.get('MONGODB_URI'),
+            mongodb_db=crawler.settings.get('MONGODB_DATABASE', 'items')
+        )
+
     def open_spider(self, spider):
-        logging.warning("OPEN SPIDER")
-        if USE_LOCAL_MONGO:
-            self.client = pymongo.MongoClient('localhost', 27017)
-            self.db = self.client["BABYPIPS"]
-        else:
-            config.read(f"{SITE_PATH}/login/accounts.ini")
-            config_data = config["MONGO"]
-            self.client = pymongo.MongoClient(f"mongodb+srv://{config_data['username']}:{config_data['password']}@cluster0.txls7.mongodb.net/?retryWrites=true&w=majority")
-            self.db = self.client["BABYPIPS"]
+        self.collection = spider.name
+        self.client = MongoClient(self.mongodb_uri)
+        self.db = self.client[self.mongodb_db]
 
-    def process_item(self, item, spider):
-        # pseudo code
-        # daily -> unique
-        # settings
-        # hour
-        
-        # cursor = self.db[spider.name].find()
-        # for each_doc in cursor:
-        #     print(each_doc)
+        # Start with a clean database
+        self.db[self.collection].delete_many({})
 
-        # add new
-        with open(f'{SITE_PATH}/mong_id/time_id.json') as ftime:
-            id_json = json.loads(ftime.read())
-        id_json["_id"] = ObjectId(id_json["_id"])
-        item = {**id_json, **item}
-
-        self.db[spider.name].insert_one(item)
-
-        # update
-        pass
+        # update not clean
 
     def close_spider(self, spider):
-        logging.warning("CLOSE SPIDER")
+        check_dirs(f"{PROJECT_PATH}/log/summary/")
+        log_file = f"{PROJECT_PATH}/log/summary/{SITE_PATH.name}_{spider.name}_{LOG_TIME}.json"
+        SUMMARY = spider.crawler.stats.get_stats()
+        SUMMARY['start_time'] = SUMMARY['start_time'].strftime('%Y-%m-%dT%H-%M-%S')
+        with open(log_file, "w", encoding='utf-8') as f:
+            f.write(dumps(SUMMARY))
         self.client.close()
+
+    def process_item(self, item, spider):
+        self.db[self.collection].insert_one(dict(item))
+        return item
